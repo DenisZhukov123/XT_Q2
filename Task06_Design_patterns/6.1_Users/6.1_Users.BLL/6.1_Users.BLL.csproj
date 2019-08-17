@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>_6._1_Users.BLL</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\6.1_Users.DAL\6.1_Users.DAL.csproj" />
+    <ProjectReference Include="..\6.1_Users.Dependencies\6.1_Users.Dependencies.csproj" />
+    <ProjectReference Include="..\6.1_Users.Entities\6.1_Users.Entities.csproj" />
+  </ItemGroup>
+
+</Project>
