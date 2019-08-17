@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>_6._1_Users_and_awards.Entities</RootNamespace>
+  </PropertyGroup>
+
+</Project>
