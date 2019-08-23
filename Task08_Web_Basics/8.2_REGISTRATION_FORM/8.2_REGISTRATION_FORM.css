@@ -1,0 +1,60 @@
+ .form
+ {
+  margin: auto;
+  position: absolute;
+  width: 399px;
+  height: 274px;
+  background-color: rgb(6, 144, 207);
+  border: 3px solid rgb(0, 117, 178);
+ }
+ .inputmail
+ {
+  width: 317px;
+ }
+
+ .inputpass
+ {
+  width: 148px;
+ }
+
+ .form_title
+ {
+  margin: 0;
+  padding: 24px 0px 12px 22px;
+  border-bottom: 1px solid white;
+  font: normal 24px Arial, sans-serif;
+  color: white;
+ }
+
+.form_reg_label
+{
+  font: normal 17px Arial, sans-serif;
+  color: white;
+}
+.form_reg_email
+{
+  margin-top: 33px;
+  margin-left: 20px;
+  width: 360px;
+}
+.form_reg_pass
+{
+  margin: 20px 20px 0 20px;
+  width: 148px;
+  float: left;
+}
+.form_reg_rep_pass
+{
+  margin: 20px 0 0 20px;
+}
+.form_button
+{
+  margin: 32px 0 20px 20px;
+  width: 82px;
+  height: 26px;
+  padding: 6px 10px;
+  background: #ffdf7f;
+  font-size: 12px;
+  border: none;
+  cursor: pointer;
+}

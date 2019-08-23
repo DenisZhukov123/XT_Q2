@@ -1,0 +1,26 @@
+body
+{
+  background: white;
+}
+
+.green
+{
+  margin-bottom: -9px;
+  background: rgb(0, 139, 102);
+  color: white;
+  padding: 12px;
+  font-size: 40px;
+}
+.grey
+{
+  background: rgb(223, 230, 225);
+  color: black;
+  padding: 12px;
+  font-size: 25px;
+  margin-left: 60px;
+  border: 1px solid white;
+  border-right: none;
+}
+
+  
+  
