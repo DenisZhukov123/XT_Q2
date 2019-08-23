@@ -1,0 +1,39 @@
+*
+{
+  margin:0;
+  padding:0;
+}
+body
+{
+  padding: 3.5em 0.5em;
+  background: #333333;
+}
+p
+{
+  position: relative;
+  color: white;
+  padding: 1.5em 0;
+  text-align: center;
+  width: auto;
+  background: rgb(136,183,213);
+  border: 5px solid rgb(179,214,236);
+}
+p::after, p::before
+{
+  left: 50%;
+  margin-left: -35px;
+  position: absolute;
+  content: '';
+}
+p::before
+{
+  top: -70px;
+  border: 35px solid transparent;
+  border-bottom-color: #C2E1F5 ; 
+}
+p::after
+{
+  top: -63px;
+  border: 35px solid transparent;
+  border-bottom-color: #88B7D5;  
+}

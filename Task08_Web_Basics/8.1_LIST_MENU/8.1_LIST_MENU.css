@@ -1,0 +1,18 @@
+ul
+{
+  width:200px;
+  background-color: rgb(249, 228, 151);
+  border: 1px solid rgb(94, 94, 94);
+  border-radius: 6px;
+  box-shadow: 4px 4px 0px 0px rgb(136, 0, 0);
+  margin: 10px auto;
+  padding: 9px;
+}
+li
+{
+  display: block;
+  color: rgb(136, 0, 0);
+  margin-bottom: 5px;
+  font-size: 16px;
+  list-style-type: none;
+}

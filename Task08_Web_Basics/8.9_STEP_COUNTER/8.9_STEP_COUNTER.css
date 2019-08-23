@@ -1,0 +1,44 @@
+.q1
+{
+    background: linear-gradient(to bottom, rgb(221, 221, 221) 0%, rgb(191, 191, 191) 50%, rgb(221, 221, 221) 100%);
+    padding: 0 2em;
+    line-height: 30px;
+    text-decoration: none;
+    color: black;
+    font-family: sans-serif;
+    display: inline-block;
+}
+.q2
+{
+    background: linear-gradient(to bottom, #b2e190 0%, #64c51d 50%, #b2e190 100%);
+    padding: 0 2em;
+    line-height: 30px;
+    text-decoration: none;
+    color: #fff;
+    font-family: sans-serif;
+    display: inline-block;
+}
+span:before, span:after 
+{
+    position:absolute;
+    width: 0px;
+    height: 0px;
+    content:" ";
+}
+span:before 
+{
+    border: 15px solid transparent;
+    border-left: 5px solid white;
+    border-right: 0px solid transparent;
+}
+span:after  
+{
+    border: 15px solid white;
+    border-right: 0 solid white;
+    border-left: 5px solid transparent;
+    margin-left: -5px;
+}
+span:first-of-type:before, span:last-of-type:after 
+{
+    display: none;
+}
