@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>9.3 BUTTERFLY CONTROL</title>
+  <style>
+    div
+    {
+      display: inline-block;
+    }
+    input
+    {
+      display: block;
+      width:30px;
+    }
+  </style>
+</head>
+<body>
+  <div id="d1">
+    <form name="Form1">
+      <select id = "s1" name="select1" size="5" style="width:120px;" multiple>
+        <option value="s1">Option1</option>
+        <option value="s2">Option2</option>
+        <option value="s3">Option3</option>
+        <option value="s4">Option4</option>
+        <option value="s5">Option5</option>
+      </select>
+    </form>
+  </div>
+  <div name="divbutton1">
+    <input type="button" name="marButton" onclick="moveAllOption('s1','s2')" value=">>"> 
+    <input type="button" name="msrButton" onclick="moveSelOption('s1','s2')" value=">">
+    <input type="button" name="mslButton" onclick="moveSelOption('s2','s1')" value="<"> 
+    <input type="button" name="malButton" onclick="moveAllOption('s2','s1')" value="<<"> 
+  </div>
+  <div id="d2">
+    <form name="Form2">
+      <select id = "s2" name="select2" size="5" style="width:120px;" multiple>
+      </select>
+    </form>
+  </div>
+  
+  <br>
+  <br>
+
+  <div id="d3">
+    <form name="Form3">
+      <select id = "s3" name="select3" size="5" style="width:120px;" multiple>
+        <option value="s1">Option1</option>
+        <option value="s2">Option2</option>
+        <option value="s3">Option3</option>
+        <option value="s4">Option4</option>
+        <option value="s5">Option5</option>
+      </select>
+    </form>
+  </div>
+  <div name="divbutton2">
+    <input type="button" name="marButton" onclick="moveAllOption('s3','s4')" value=">>"> 
+    <input type="button" name="msrButton" onclick="moveSelOption('s3','s4')" value=">">
+    <input type="button" name="mslButton" onclick="moveSelOption('s4','s3')" value="<"> 
+    <input type="button" name="malButton" onclick="moveAllOption('s4','s3')" value="<<"> 
+  </div>
+  <div id="d4">
+    <form name="Form4">
+      <select id = "s4" name="select4" size="5" style="width:120px;" multiple>
+      </select>
+    </form>
+  </div>
+
+  <br>
+  <br>
+
+  <div id="d5">
+    <form name="Form5">
+      <select id = "s5" name="select5" size="5" style="width:120px;" multiple>
+        <option value="s1">Option1</option>
+        <option value="s2">Option2</option>
+        <option value="s3">Option3</option>
+        <option value="s4">Option4</option>
+        <option value="s5">Option5</option>
+      </select>
+    </form>
+  </div>
+  <div name="divbutton3">
+    <input type="button" name="marButton" onclick="moveAllOption('s5','s6')" value=">>"> 
+    <input type="button" name="msrButton" onclick="moveSelOption('s5','s6')" value=">">
+    <input type="button" name="mslButton" onclick="moveSelOption('s6','s5')" value="<"> 
+    <input type="button" name="malButton" onclick="moveAllOption('s6','s5')" value="<<"> 
+  </div>
+  <div id="d6">
+    <form name="Form6">
+      <select id = "s6" name="select6" size="5" style="width:120px;" multiple>
+      </select>
+    </form>
+  </div>
+
+
+
+  <script>
+    function getSelectedIndexes(oListbox)
+    {
+      var arrIndexes = new Array;
+      for (var i=0; i < oListbox.options.length; i++)
+      {
+        if(oListbox.options[i].selected)
+          arrIndexes.push(i);
+      }
+      return arrIndexes;
+    };
+    function delSelectedIndexes(oListbox, arrIn)
+    {
+      var arrIndexes = arrIn;
+      var i=0;
+      for(var i=arrIn.length-1;i>=0;i--)
+        oListbox.options[arrIn[i]]=null
+    };
+
+   /* function moveSelOptionRight()
+    {
+      var options=document.Form1.select1.options;
+		  var selectedIndex = document.Form1.select1.options.selectedIndex;
+      var arrIndexes=getSelectedIndexes(document.Form1.select1);
+      if(arrIndexes.length <= 0) 
+        alert("Не выбран ни один элемент!"); 
+      else
+      {
+        for (var i=0; i < arrIndexes.length; i++)
+        {
+          var text = options[arrIndexes[i]].text;
+          var value = options[arrIndexes[i]].value;
+          var newOption = new Option(text,value);
+          document.Form2.select2.add(newOption);
+        }
+        delSelectedIndexes(document.Form1.select1, arrIndexes)
+      }
+    }*/
+
+    function moveSelOption(idselectfrom, idselectto)
+    {
+      var objSelFrom = document.getElementById(idselectfrom); 
+      var objSelTo = document.getElementById(idselectto); 
+      var arrIndexes = getSelectedIndexes(objSelFrom);
+      if(arrIndexes.length <= 0) 
+        alert("Не выбран ни один элемент!"); 
+      else
+      {
+        for (var i=0; i < arrIndexes.length; i++)
+        {
+          var text = objSelFrom.options[arrIndexes[i]].text;
+          var value =  objSelFrom.options[arrIndexes[i]].value;
+          var newOption = new Option(text,value);
+          objSelTo.add(newOption);
+        }
+        delSelectedIndexes(objSelFrom, arrIndexes)
+      }
+    }
+
+    function moveAllOption(idselectfrom, idselectto)
+    {
+      var objSelFrom = document.getElementById(idselectfrom); 
+      var objSelTo = document.getElementById(idselectto); 
+      while(objSelFrom.length)
+        objSelTo.add(objSelFrom.item(0));
+    }
+
+    /*function moveSelOptionLeft()
+    {
+      var options=document.Form2.select2.options;
+		  var selectedIndex = document.Form2.select2.options.selectedIndex;
+      var arrIndexes=getSelectedIndexes(document.Form2.select2);
+      if(selectedIndex < 0) 
+        alert("Не выбран ни один элемент!"); 
+      else
+      {
+        for (var i=0; i < arrIndexes.length; i++)
+        {
+          var text = options[arrIndexes[i]].text;
+          var value = options[arrIndexes[i]].value;
+          var newOption = new Option(text,value);
+          document.Form1.select1.add(newOption);
+        }
+        delSelectedIndexes(document.Form2.select2, arrIndexes)
+      }
+    }*/
+    /*function moveAllOptionRight()
+    {
+      while(document.Form1.select1.length)
+     	  document.Form2.select2.add(document.Form1.select1.item(0));
+    }
+    function moveAllOptionLeft()
+    {
+      while(document.Form2.select2.length)
+     	  document.Form1.select1.add(document.Form2.select2.item(0));
+    }*/
+
+
+  </script>
+</body>
+</html>

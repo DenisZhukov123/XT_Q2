@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="9.3_BUTTERFLY_CONTROL.css"/>
+  <title>9.3 BUTTERFLY CONTROL</title>
+  <script type="text/javascript" src="9.3_BUTTERFLY_CONTROL.js"></script>
+</head>
+<body>
+  <div>
+    <div id="d1" class="chld">
+      <form name="Form1">
+        <select id = "s1" name="select1" size="5" multiple>
+         <option value="s1">Один</option>
+         <option value="s2">Два</option>
+         <option value="s3">Три</option>
+         <option value="s4">Четыре</option>
+         <option value="s5">Пять</option>
+        </select>
+      </form>
+    </div>
+
+    <div name="divbutton1" class="but">
+      <input type="button" name="marButton" onclick="moveAllOption('s1','s2')" value=">>"> 
+      <input type="button" name="msrButton" onclick="moveSelOption('s1','s2')" value=">">
+      <input type="button" name="mslButton" onclick="moveSelOption('s2','s1')" value="<"> 
+      <input type="button" name="malButton" onclick="moveAllOption('s2','s1')" value="<<"> 
+    </div>
+
+    <div id="d2" class="chld">
+     <form name="Form2">
+       <select id = "s2" name="select2" size="5" multiple>
+       </select>
+     </form>
+    </div>
+  </div>
+  
+  <div>
+    <div id="d3" class="chld">
+      <form name="Form3">
+        <select id = "s3" name="select3" size="5" multiple>
+          <option value="s1">Синий</option>
+          <option value="s2">Красный</option>
+          <option value="s3">Белый</option>
+          <option value="s4">Желтый</option>
+          <option value="s5">Зеленый</option>
+        </select>
+      </form>
+    </div>
+
+    <div name="divbutton2" class="but">
+      <input type="button" name="marButton" onclick="moveAllOption('s3','s4')" value=">>"> 
+      <input type="button" name="msrButton" onclick="moveSelOption('s3','s4')" value=">">
+      <input type="button" name="mslButton" onclick="moveSelOption('s4','s3')" value="<"> 
+      <input type="button" name="malButton" onclick="moveAllOption('s4','s3')" value="<<"> 
+    </div>
+
+    <div id="d4" class="chld">
+      <form name="Form4">
+        <select id = "s4" name="select4" size="5" multiple>
+       </select>
+      </form>
+    </div>
+  </div>
+
+  <div>
+   <div id="d5" class="chld">
+     <form name="Form5">
+        <select id = "s5" name="select5" size="5" multiple>
+          <option value="s1">Куб</option>
+          <option value="s2">Прямоугольник</option>
+          <option value="s3">Треугольник</option>
+          <option value="s4">Квадрат</option>
+          <option value="s5">Круг</option>
+        </select>
+      </form>
+    </div>
+
+    <div name="divbutton3" class="but">
+      <input type="button" name="marButton" onclick="moveAllOption('s5','s6')" value=">>"> 
+      <input type="button" name="msrButton" onclick="moveSelOption('s5','s6')" value=">">
+      <input type="button" name="mslButton" onclick="moveSelOption('s6','s5')" value="<"> 
+      <input type="button" name="malButton" onclick="moveAllOption('s6','s5')" value="<<"> 
+    </div>
+
+    <div id="d6" class="chld">
+      <form name="Form6">
+        <select id = "s6" name="select6" size="5" multiple>
+        </select>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+
+.chld
+{
+	width: 120px;
+	display: block;
+	display: inline-block;
+}
+
+.but
+{
+	display: inline-block;
+    width:30px;
+}
+select
+{
+	width:120px;
+}
+
+input
+{
+	display: block;
+    width:30px;
+}
+
