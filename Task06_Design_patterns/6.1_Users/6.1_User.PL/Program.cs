@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using _6._1_Users.Entities;
-using _6._1_Users.BLL;
 using System.IO;
 
 namespace _6._1_Users.PL
 {
     class Program
     {
+        private static IUserManageble UsersManager;
+   
         static public void PrintMenu()
         {
             Console.Clear();
@@ -112,6 +113,7 @@ namespace _6._1_Users.PL
         static public void RemoveUser()
         {
             Console.Clear();
+            ViewUsers(UsersManager.GetAllUsers());
             Console.WriteLine("Enter id of user for remove:");
             if (UsersManager.RemoveUser(EnterGuid()))
                 Console.WriteLine("User remove successfull!");
@@ -147,6 +149,7 @@ namespace _6._1_Users.PL
         }
         public static void Refresh(string path)
         {
+            UsersManager = Dependencies.Dependencies.UsersManager;
             ReadFile(path);
             PrintMenu();
             SelectMode(InputMode());

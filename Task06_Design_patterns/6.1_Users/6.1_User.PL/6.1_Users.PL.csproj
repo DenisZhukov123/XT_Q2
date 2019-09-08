@@ -58,6 +58,10 @@
       <Project>{7dd89378-3701-40ca-bca8-31320193c53d}</Project>
       <Name>6.1_Users.BLL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\6.1_Users.Dependencies\6.1_Users.Dependencies.csproj">
+      <Project>{1574eeb5-1e0b-4cfb-82a6-85c65dd8b28b}</Project>
+      <Name>6.1_Users.Dependencies</Name>
+    </ProjectReference>
     <ProjectReference Include="..\6.1_Users.Entities\6.1_Users.Entities.csproj">
       <Project>{e50a63e9-5243-4d20-af6e-e9c3ef73b415}</Project>
       <Name>6.1_Users.Entities</Name>

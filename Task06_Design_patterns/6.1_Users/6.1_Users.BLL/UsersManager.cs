@@ -1,5 +1,4 @@
-﻿using _6._1_Users.Dependencies;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using _6._1_Users.Entities;
@@ -7,31 +6,36 @@ using _6._1_Users.DAL;
 
 namespace _6._1_Users.BLL
 {
-    public static class UsersManager
+    public class UsersManager: IUserManageble
     {
-        public static IUsersStorable MemoryStorage => Dependencies.Dependencies.UsersStorage;
-        public static bool AddUser(string name, DateTime birth)
+        private readonly IUsersStorable MemoryStorage;
+
+        public UsersManager(IUsersStorable MemoryStorage)
+        {
+            this.MemoryStorage = MemoryStorage;
+        }
+        public bool AddUser(string name, DateTime birth)
         {
             return MemoryStorage.AddUser(new User(name, birth));
         }
 
-        public static bool RemoveUser(Guid id)
+        public bool RemoveUser(Guid id)
         {
             return MemoryStorage.RemoveUser(id);
         }
 
-        public static void RecordFile(string path)
+        public void RecordFile(string path)
         {
             MemoryStorage.RecordFile(path);
         }
 
-        public static void ReadFile(string path)
+        public void ReadFile(string path)
 
         {
             MemoryStorage.ReadFile(path);
         }
 
-        public static ICollection<User> GetAllUsers()
+        public ICollection<User> GetAllUsers()
         {
             return MemoryStorage.SelectAllUsers();
         }

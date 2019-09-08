@@ -58,6 +58,10 @@
       <Project>{7092ad6e-98af-4bb3-ab9c-a0fa858e8b0c}</Project>
       <Name>6.1_Users_and_awards.BLL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\6.1_Users_and_awards.Dependencies\6.1_Users_and_awards.Dependencies.csproj">
+      <Project>{5f3270ea-1cec-4155-b4c3-7c19574f480d}</Project>
+      <Name>6.1_Users_and_awards.Dependencies</Name>
+    </ProjectReference>
     <ProjectReference Include="..\6.1_Users_and_awards.Entities\6.1_Users_and_awards.Entities.csproj">
       <Project>{53ddce5f-6baf-454b-b499-e7e4d160d93c}</Project>
       <Name>6.1_Users_and_awards.Entities</Name>
