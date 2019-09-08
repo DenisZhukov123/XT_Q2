@@ -8,6 +8,10 @@ namespace _6._1_Users_and_awards.PL
 {
     class Program
     {
+
+        private static IUsersAndAwardsManageble UsersAwardsManager;
+        /*private static IUsersAndAwardsManageble UsersManager;
+        private static IUsersAndAwardsManageble AwardsManager;*/
         static public void PrintMenu()
         {
             Console.Clear();
@@ -48,7 +52,7 @@ namespace _6._1_Users_and_awards.PL
                     Refresh(path);
                     break;
                 case 2:
-                    ViewUsers(UsersAwardsManager.GetAllUsers());
+                    ViewUsers(UsersAwardsManager.GetAllUsers(),true);
                     PrintMenu();
                     SelectMode(InputMode());
                     break;
@@ -63,7 +67,7 @@ namespace _6._1_Users_and_awards.PL
                     Refresh(path);
                     break;
                 case 5:
-                    ViewAwards(UsersAwardsManager.GetAllAwards());
+                    ViewAwards(UsersAwardsManager.GetAllAwards(),true);
                     PrintMenu();
                     SelectMode(InputMode());
                     break;
@@ -147,6 +151,7 @@ namespace _6._1_Users_and_awards.PL
         static public void RemoveUser()
         {
             Console.Clear();
+            ViewUsers(UsersAwardsManager.GetAllUsers(),false);
             Console.WriteLine("Enter id of user for remove:");
             if (UsersAwardsManager.RemoveUser(EnterGuid()))
                 Console.WriteLine("User remove successfull!");
@@ -156,9 +161,10 @@ namespace _6._1_Users_and_awards.PL
             Console.ReadKey();
         }
 
-        static public void ViewUsers(ICollection<User> users)
+        static public void ViewUsers(ICollection<User> users, bool clear)
         {
-            Console.Clear();
+            if(clear)
+                Console.Clear();
             if (users.Count != 0)
             {
                 Console.WriteLine("========================================");
@@ -190,9 +196,10 @@ namespace _6._1_Users_and_awards.PL
             Console.ReadKey();
         }
 
-        static public void ViewAwards(ICollection<Award> awards)
+        static public void ViewAwards(ICollection<Award> awards, bool clear)
         {
-            Console.Clear();
+            if(clear)
+                Console.Clear();
             if (awards.Count != 0)
             {
                 Console.WriteLine("========================================");
@@ -213,6 +220,8 @@ namespace _6._1_Users_and_awards.PL
         public static void AddAwardToUser()
         {
             Console.Clear();
+            ViewUsers(UsersAwardsManager.GetAllUsers(), false);
+            ViewAwards(UsersAwardsManager.GetAllAwards(), false);
             Guid UserId;
             Guid AwardId;
             Console.WriteLine("Enter ID of user:");
@@ -256,6 +265,7 @@ namespace _6._1_Users_and_awards.PL
 
         public static void Refresh(string path)
         {
+            UsersAwardsManager = Dependencies.Dependencies.UsersAwardsManager;
             ReadFiles(path);
             PrintMenu();
             SelectMode(InputMode());

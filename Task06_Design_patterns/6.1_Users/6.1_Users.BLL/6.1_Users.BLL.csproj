@@ -11,7 +11,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\6.1_Users.DAL\6.1_Users.DAL.csproj" />
-    <ProjectReference Include="..\6.1_Users.Dependencies\6.1_Users.Dependencies.csproj" />
     <ProjectReference Include="..\6.1_Users.Entities\6.1_Users.Entities.csproj" />
   </ItemGroup>
 
