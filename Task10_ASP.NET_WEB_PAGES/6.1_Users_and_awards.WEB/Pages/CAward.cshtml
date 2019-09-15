@@ -1,0 +1,51 @@
+﻿@using _6._1_Users_and_awards.WEB.Models;
+
+@{
+    string errorMessage = null;
+    if(IsPost)
+    {
+        var Title = Request["Title"];
+        var Image = Request["Image"];
+  
+        if (UsersAndAwards.CreateAward(Title, Image))
+        {
+            UsersAndAwards.Save(UsersAndAwards.Path);
+            errorMessage = "Create award successful!";
+        }
+        else
+        {
+            errorMessage = "Error create of award!";
+        }
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create award</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet">
+</head>
+<body>
+    @if (errorMessage != null)
+    {
+        <div class="alert alert-danger">@errorMessage</div>
+    }
+    <div><h3>Page create of award</h3></div>
+    <div>
+        <form action="" method="post">
+            <div class="field">
+                <label for="a">Enter title of award:</label>
+                <input type="text" name="Title" id="Title">
+            </div>
+            <div class="field">
+                <label for="a">Enter name of file for image award (in png):</label>
+                <input type="text" name="Image" id="Image">
+            </div>
+            <button>Create</button>
+        </form>
+    </div>
+    <a href="~/Pages/Index">Main page</a>
+</body>
+</html>

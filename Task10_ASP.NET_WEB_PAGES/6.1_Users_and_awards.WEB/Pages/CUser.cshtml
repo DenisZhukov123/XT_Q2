@@ -1,0 +1,49 @@
+﻿@using _6._1_Users_and_awards.WEB.Models;
+
+@{
+    string errorMessage = null;
+    if (IsPost)
+    {
+        var Name = Request["Name"];
+        var Birth = Request["Birth"];
+
+        if (UsersAndAwards.CreateUser(Name, Birth))
+        {
+            UsersAndAwards.Save(UsersAndAwards.Path);
+            errorMessage = "Create user successful!";
+        }
+        else
+        {
+            errorMessage = "Error create of user!";
+        }
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create user</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet">
+</head>
+<body>
+    @if (errorMessage != null)
+    {
+        <div class="alert alert-danger">@errorMessage</div>
+    }
+    <div><h3>Page create of user</h3></div>
+    <div>
+        <form action="" method="post">
+            <div class="field">
+                <label for="a">Enter name of user:</label>
+                <input type="text" name="Name" id="Name">
+            </div>
+            <div class="field">
+                <label for="a">Enter date of birth user (dd:mm:yyyy):</label>
+                <input type="text" name="Birth" id="Birth">
+            </div>
+            <button>Create</button>
+        </form>
+    </div>
+    <div><a href="~/Pages/Index">Main page</a></div>
+</body>
+</html>

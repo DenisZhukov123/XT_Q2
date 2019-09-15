@@ -1,0 +1,46 @@
+﻿@using _6._1_Users_and_awards.WEB.Models;
+
+@{
+    UsersAndAwards.Refresh();
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Main page</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet">
+</head>
+<body>
+    @if (User.IsInRole("Guest"))
+    {
+        <h5>You entered as a 'Guest'. You can <a href="~/Pages/Registration.cshtml">register now</a></h5>
+    }
+    @if (User.IsInRole("User"))
+    {
+        <h5>You entered as a 'User'</h5>
+    }
+    @if (User.IsInRole("Admin"))
+    {
+        <h5>You entered as a 'Admin'</h5>
+    }
+    <div><h3>Please select action:</h3></div>
+    <ul>
+        @if (User.IsInRole("Admin"))
+        {
+
+            <li><a href="~/Pages/CUser">Create user</a></li>
+            <li><a href="~/Pages/EUSer1">Edit user</a></li>
+            <li><a href="~/Pages/DUser">Delete user</a></li>
+            <li><a href="~/Pages/AwardToUser">Award to user</a></li>
+            <li><a href="~/Pages/CAward">Create new award</a></li>
+            <li><a href="~/Pages/EAward">Edit award</a></li>
+            <li><a href="~/Pages/DAward">Delete award</a></li>
+            <li><a href="~/Pages/VAward">View list of awards</a></li>
+            <li><a href="~/Pages/EUser2">Edit role user</a></li>
+        }
+        <li><a href="~/Pages/VUser">View list of users</a></li>
+        <li><a href="~/Pages/SignOut">Exit</a></li>
+    </ul>
+</body>
+</html>

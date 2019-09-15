@@ -1,0 +1,83 @@
+﻿@using _6._1_Users_and_awards.WEB.Models;
+
+
+@{
+    string errorMessage = null;
+    if (IsPost)
+    {
+        var Id = Request["Id"];
+
+        if (UsersAndAwards.RemoveUser(Id))
+        {
+            UsersAndAwards.Save(UsersAndAwards.Path);
+            errorMessage = "Delete user successful!";
+        }
+        else
+        {
+            errorMessage = "Delete user error!";
+        }
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete user</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet">
+</head>
+<body>
+    @if (errorMessage != null)
+    {
+        <div class="alert alert-danger">@errorMessage</div>
+    }
+    <div><h3>Page delete of users</h3></div>
+    <div>
+        @if (UsersAndAwards.GetAllUsers().Count != 0)
+        {
+            var users = UsersAndAwards.GetAllUsers();
+        <table border="1">
+            <caption>Table of Users</caption>
+            @foreach (var user in users)
+            {
+                <tr><th>Name of user:  @user.Name</th></tr>
+                <tr><td>@user.Id_str</td></tr>
+                <tr><td>Age of user: @user.Age</td></tr>
+                if (UsersAndAwards.GetUserAward(user.Id_str).Count != 0)
+                {
+                    <tr><th>Award(s) of "@user.Name"</th></tr>
+                    var awards = UsersAndAwards.GetUserAward(user.Id_str);
+                    foreach (var award in awards)
+                    {
+                        string path = @UsersAndAwards.GetImage(award);
+                        <tr><td>@award.Title</td><td><img src="~/Pages/Image/@path"></td></tr>
+                    }
+
+                }
+            }
+        </table>
+            <form action="" method="post">
+                <div class="field">
+                    <label for="a">Enter id of user for delete:</label>
+                    <input type="text" name="Id" id="Id">
+                </div>
+                <button>Delete</button>
+            </form>
+        }
+        else
+        {
+            <table border="1">
+                <caption>Table of Users</caption>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                </tr>
+                <tr><td>Empty</td><td>Empty</td><td>Empty</td></tr>
+            </table>
+        }
+    </div>
+    <a href="~/Pages/Index">Main page</a>
+</body>
+</html>
