@@ -1,0 +1,45 @@
+﻿@using Epam.MyDrive.WEB.Models;
+
+@{
+    Layout = "~/Pages/_MainLayout.cshtml";
+    string errorMessage = null;
+    Validation.RequireField("Text", "Требуется ввести текст");
+    Validation.Add("Text", Validator.StringLength(1000,1));
+    if (IsPost && Validation.IsValid())
+    {
+        var Text = Request["Text"];
+
+        if (MessagePL.CreateMessage(UsersPL.CurrentUser, UsersPL.ViewUser, Text))
+        {
+            errorMessage = "Сообщение отправлено!";
+        }
+        else
+        {
+            errorMessage = "Ошибка при отправке сообщения!";
+        }
+    }
+}
+
+<div class="post-item">
+    <table class="blog">
+        @if (errorMessage != null)
+        {
+            <tr>
+                <td>@errorMessage</td>
+            </tr>
+        }
+        <tr>
+            <td>Сообщение пользователю: @UsersPL.ViewUser</td>
+        </tr>
+        <tr>
+            <td>
+                <form action="" method="post">
+                    <label for="a">Текст сообщения:</label>
+                    <p>@Html.ValidationMessage("Text")</p>
+                    <p><textarea rows="10" cols="45" name="Text" value="@Request["Text"]" @Validation.For("Text")></textarea></p>
+                    <button>Отправить</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>

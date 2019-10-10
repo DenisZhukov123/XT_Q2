@@ -1,0 +1,51 @@
+﻿@using Epam.MyDrive.WEB.Models;
+
+@{
+    Layout = "~/Pages/_MainLayout.cshtml";
+    string errorMessage = null;
+    Validation.RequireField("Title", "Требуется ввести заголовок");
+    Validation.Add("Title", Validator.StringLength(50,1));
+    Validation.RequireField("Text", "Требуется ввести текст");
+    Validation.Add("Text", Validator.StringLength(1000,1));
+    if (IsPost && Validation.IsValid())
+    {
+        var Title = Request["Title"];
+        var Text = Request["Text"];
+
+        if (BlogsPL.CreateBlogUser(Title, Text, UsersPL.CurrentUser))
+        {
+            errorMessage = "Запись создана успешно!";
+        }
+        else
+        {
+            errorMessage = "Ошибка при создании записи!";
+        }
+    }
+}
+
+    <div class="post-item">
+        <table class="blog">
+            @if (errorMessage != null)
+            {
+                <tr>
+                    <td>@errorMessage</td>
+                </tr>
+            }
+            <tr>
+                <td><h1>Создание записи блога @UsersPL.CurrentUser</h1></td>
+            </tr>
+            <tr>
+                <td>
+                    <form action="" method="post">
+                        <label for="a">Заголовок:</label>
+                        <p>@Html.ValidationMessage("Title")</p>
+                        <p><input type="text" name="Title" id="Title" size="25" value="@Request["Title"]" @Validation.For("Title")></p>
+                        <label for="a">Текст записи:</label>
+                        <p>@Html.ValidationMessage("Text")</p>
+                        <p><textarea rows="10" cols="45" name="Text" value="@Request["Text"]" @Validation.For("Text")></textarea></p>
+                        <button>Создать</button>
+                    </form>
+                <td />
+            </tr>
+        </table>
+    </div>

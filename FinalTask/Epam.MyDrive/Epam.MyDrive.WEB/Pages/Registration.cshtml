@@ -1,0 +1,65 @@
+﻿@using Epam.MyDrive.WEB.Models;
+@{
+    string errorMessage = null;
+    Validation.RequireField("login", "Требуется ввести логин");
+    Validation.Add("login", Validator.StringLength(25,1));
+    Validation.RequireField("pass", "Требуется ввести пароль");
+    if (IsPost && Validation.IsValid())
+    {
+        var login = Request["login"];
+        var pass = Request["pass"];
+        if (MyRoleProvider.CreateUser(login, pass))
+        {
+            Response.Redirect("/Pages/SignIn");
+            return;
+        }
+        else
+        {
+            errorMessage = "Ошибка регистрации! Такой пользователь уже существует";
+        }
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Registration</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet">
+    <link href="~/SignInStyles.css" rel="stylesheet">
+    <style>
+        .field-validation-error {
+            color: red;
+            font-weight: bold;
+        }
+
+        .input-validation-error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.8.1/jquery.validate.js">
+    </script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+</head>
+<body>
+    <div class="login-page">
+        <div class="form">
+            @if (errorMessage != null)
+            {
+                <div>@errorMessage</div>
+            }
+            <form method="post" class="login-form" enctype="multipart/form-data">
+
+                @Html.ValidationMessage("login")
+                <input type="text" name="login" id="login" placeholder="Логин" value="@Request["login"]" @Validation.For("login") />
+                @Html.ValidationMessage("pass")
+                <input type="password" name="pass" id="pass" placeholder="Пароль" value="@Request["pass"]" @Validation.For("pass") />
+                <button>Регистрация</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

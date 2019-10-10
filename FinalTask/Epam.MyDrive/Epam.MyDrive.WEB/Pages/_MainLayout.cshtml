@@ -1,0 +1,62 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/Styles.css">
+    <link href="~/SignInStyles.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/Content/font-awesome.min.css">
+    <style>
+        .field-validation-error {
+            color: red;
+            font-weight: bold;
+        }
+
+        .input-validation-error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.8.1/jquery.validate.js">
+    </script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <title></title>
+</head>
+<body>
+    <ul id="navbar">
+        <li><a href="~/Pages/Index">Главная</a></li>
+        @if (User.IsInRole("User") || User.IsInRole("Admin")&& User.Identity.Name != "admin")
+        {
+            <li><a href="~/Pages/CurrentUser">Моя страница</a></li>
+        }
+        <li><a href="~/Pages/AllUsers">Люди</a></li>
+        <li><a href="~/Pages/AllCars">Машины</a></li>
+        @if (User.IsInRole("User") || User.IsInRole("Admin"))
+        {
+            <li><a href="~/Pages/Search"><i class="fa fa-search"></i></a></li>
+            <li><a href="~/Pages/Message"><i class="fa fa-envelope"></i></a></li>
+        }
+        @if (User.IsInRole("User") || User.IsInRole("Admin") && User.Identity.Name != "admin")
+        {
+            <li>
+                <a href="#"><i class="fa fa-cog"></i></a>
+                <ul>
+                    <li><a href="~/Pages/Profile">Редактирование профиля</a></li>
+                </ul>
+            </li>
+        }
+        @if (User.IsInRole("User") || User.IsInRole("Admin"))
+        {
+            <li><a href="~/Pages/SignOut">Выйти</a></li>
+        }
+        @if (User.IsInRole("Guest"))
+        {
+            <li><a href="~/Pages/SignIn.cshtml">Войти</a></li>
+            <li><a href="~/Pages/Registration.cshtml">Регистрация</a></li>
+        }
+    </ul>
+    @RenderBody()
+</body>
+</html>

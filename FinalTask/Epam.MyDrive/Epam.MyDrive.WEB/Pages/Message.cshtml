@@ -1,0 +1,154 @@
+﻿@using Epam.MyDrive.WEB.Models;
+@{
+    Layout = "~/Pages/_MainLayout.cshtml";
+    if (IsPost)
+    {
+        if (Request["MesEdit"] != null)
+        {
+            var Message = Request["MesEdit"];
+            MessagePL.Temp = Message;
+            Response.Redirect("~/Pages/EditMessage");
+        }
+        if (Request["MesDel"] != null)
+        {
+            var Message = Request["MesDel"];
+            MessagePL.Temp = Message;
+            Response.Redirect("~/Pages/DelMessage");
+        }
+    }
+
+}
+
+<div class="post-item">
+    <table class="blog">
+        <tr>
+            <td>
+                Сообщения мне:
+            </td>
+        </tr>
+        @{
+            var MyMessage = MessagePL.GetAllMyMessage(UsersPL.CurrentUser);
+            var MeMessage = MessagePL.GetAllMeMessage(UsersPL.CurrentUser);
+
+            foreach (var item in MeMessage)
+            {
+                <tr>
+                    <td>
+                        От:@item.SendNick
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @item.Text
+                    </td>
+                </tr>
+
+            }
+        }
+    </table>
+</div>
+<div class="post-item">
+    <table class="blog">
+        <tr>
+            <td>
+                Мои сообщения:
+            </td>
+        </tr>
+        @{
+            foreach (var item in MyMessage)
+            {
+                <tr>
+                    <td>
+                        Кому:@item.RecNick
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @item.Text
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <form action="" method="post">
+                            <input type="hidden" name="MesEdit" id="MesEdit" value="@item.ID.ToString()">
+                            <button>Изменить</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <form action="" method="post">
+                            <input type="hidden" name="MesDel" id="MesEdit" value="@item.ID.ToString()">
+                            <button>Удалить</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</div>
+@if (User.IsInRole("Admin"))
+{
+    var AllMessage = MessagePL.GetAllMessage();
+    if (AllMessage.Count <= 0)
+    {
+        <div class="post-item">
+            <table class="blog">
+                <tr>
+                    <td>
+                        На данный момент сообщений нет
+                    </td>
+                </tr>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="post-item">
+            <table class="blog">
+                <tr>
+                    <td>
+                        Все сообщения:
+                    </td>
+                </tr>
+                @{
+                    foreach (var item in AllMessage)
+                    {
+                        <tr>
+                            <td>
+                                Отправитель:@item.SendNick
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Кому:@item.RecNick
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @item.Text
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <form action="" method="post">
+                                    <input type="hidden" name="MesEdit" id="MesEdit" value="@item.ID.ToString()">
+                                    <button>Изменить</button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <form action="" method="post">
+                                    <input type="hidden" name="MesDel" id="MesEdit" value="@item.ID.ToString()">
+                                    <button>Удалить</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+    }
+
+}

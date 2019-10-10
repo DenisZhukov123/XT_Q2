@@ -1,0 +1,61 @@
+﻿@using Epam.MyDrive.WEB.Models;
+@{
+    Layout = "~/Pages/_MainLayout.cshtml";
+    if (IsPost)
+    {
+        if (Request["Car"] != null)
+        {
+            CarsPL.Temp = Request["Car"];
+            Response.Redirect("~/Pages/Car");
+        }
+    }
+}
+
+@{var AllCars = CarsPL.GetAllCars();}
+<div class="post-item">
+    <table class="car">
+        @if (AllCars.Count <= 0)
+        {
+            <tr>
+                <td>
+                    <h1>На данный момент зарегистрированных машин не найдено</h1>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+@{foreach (var item in AllCars)
+    {
+        <div class="post-item">
+            <table class="car">
+                <tr>
+                    <td><h1>@item.Brand @item.Model</h1></td>
+                </tr>
+                <tr>
+                    <td>
+                        @{var src1 = Convert.ToBase64String(item.Image);}
+                        <img style="width:150px;height:150px" src="data:image/png;base64,@src1" alt="image" />
+                    </td>
+                </tr>
+                <tr>
+                    <td><p>Дата выпуска: @item.YearOfManuf.ToShortDateString()</p></td>
+                </tr>
+                <tr>
+                    <td><p>Мощность: @item.Power л.с.</p></td>
+                </tr>
+                @if (User.IsInRole("User") || User.IsInRole("Admin"))
+                {
+                    <tr>
+                        <td>
+                            <form action="" method="post">
+                                <input type="hidden" name="Car" id="Car" value="@item.ID.ToString()">
+                                <button>Перейти в БЖ</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+}

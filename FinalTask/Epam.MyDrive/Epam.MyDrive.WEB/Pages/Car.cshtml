@@ -1,0 +1,95 @@
+﻿@using Epam.MyDrive.WEB.Models;
+@{
+    Layout = "~/Pages/_MainLayout.cshtml";
+    var TempCurrentCar = CarsPL.GetCarById(Guid.Parse(CarsPL.Temp));
+    var TempCurrentBlog = BlogsPL.GetCarBlogs(TempCurrentCar);
+
+    if (IsPost)
+    {
+
+        BlogsPL.Temp = Request["Blog"];
+        Response.Redirect("~/Pages/CarBlog");
+    }
+}
+
+<div class="post-item">
+    <table class="car">
+        <tr>
+            <td><h1>@TempCurrentCar.Brand @TempCurrentCar.Model</h1></td>
+        </tr>
+        @{
+            var src1 = Convert.ToBase64String(TempCurrentCar.Image);
+        }
+        <tr>
+            <td>
+                <img style="width:150px;height:150px" src="data:image/png;base64,@src1" alt="image" />
+            </td>
+        </tr>
+        <tr>
+            <td><p>Дата выпуска: @TempCurrentCar.YearOfManuf.ToShortDateString()</p></td>
+        </tr>
+        <tr>
+            <td><p>Мощность: @TempCurrentCar.Power л.с.</p></td>
+        </tr>
+    </table>
+</div>
+
+<div class="post-item">
+    <table class="blog">
+        @{
+            if (TempCurrentBlog.Count <= 0)
+            {
+                <tr>
+                    <td>
+                        <h1>На данный момент записей в бортовом журнале не найдено</h1>
+                    </td>
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <td>
+                        <h1>Бортовой журнал</h1>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</div>
+
+@if (User.IsInRole("User") || User.IsInRole("Admin"))
+{
+    foreach (var item in TempCurrentBlog)
+    {
+        <div class="post-item">
+            <table class="blog">
+                <tr>
+                    <td>
+                        @item.Title
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <form action="" method="post">
+                            <input type="hidden" name="Blog" id="Blog" value="@item.ID.ToString()">
+                            <button>Открыть запись БЖ</button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    }
+}
+
+@if (UsersPL.CurrentUser == UsersPL.ViewUser)
+{
+    <div class="post-item">
+        <table class="blog">
+            <tr>
+                <td>
+                    <a href="~/Pages/CreateBlogCar">Создать запись в БЖ</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+}

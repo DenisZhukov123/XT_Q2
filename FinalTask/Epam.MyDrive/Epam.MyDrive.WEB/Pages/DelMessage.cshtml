@@ -1,0 +1,42 @@
+﻿@using Epam.MyDrive.WEB.Models;
+@{
+    Layout = "~/Pages/_MainLayout.cshtml";
+    var TempCurrentMessage = MessagePL.GetMessageById(Guid.Parse(MessagePL.Temp));
+    if (IsPost)
+    {
+        if (Request["DelMess"] != null)
+        {
+            MessagePL.DeleteMessage(TempCurrentMessage.ID);
+            Response.Redirect("~/Pages/Message");
+        }
+        if (Request["Cancel"] != null)
+        {
+            Response.Redirect("~/Pages/Message");
+        }
+
+    }
+}
+
+    <div class="post-item">
+        <table class="car">
+            <tr>
+                <td><h1>Вы уверены, что хотите удалить сообщение?</h1>
+            </tr>
+            <tr>
+                <td>
+                    <form action="" method="post">
+                        <input type="hidden" name="DelMess" id="DelMess" value="@MessagePL.Temp">
+                        <button>Да</button>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <form action="" method="post">
+                        <input type="hidden" name="Cancel" id="Cancel" value="@MessagePL.Temp">
+                        <button>Нет</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>

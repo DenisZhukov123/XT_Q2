@@ -1,0 +1,133 @@
+﻿@using Epam.MyDrive.WEB.Models;
+@{
+    Layout = "~/Pages/_MainLayout.cshtml";
+    var TempViewUser = UsersPL.GetUserByNick(UsersPL.CurrentUser);
+    UsersPL.ViewUser = UsersPL.CurrentUser;
+    if (IsPost)
+    {
+        if (Request["UserBlog"] != null)
+        {
+            BlogsPL.Temp = Request["UserBlog"];
+            Response.Redirect("~/Pages/UserBlog");
+        }
+        if (Request["Car"] != null)
+        {
+            CarsPL.Temp = Request["Car"];
+            UsersPL.ViewUser = UsersPL.CurrentUser;
+            Response.Redirect("~/Pages/Car");
+        }
+        if (Request["DelCar"] != null)
+        {
+            CarsPL.Temp = Request["DelCar"];
+            Response.Redirect("~/Pages/DelCar");
+        }
+        if (Request["DelUser"] != null)
+        {
+            UsersPL.ViewUser = Request["DelUser"];
+            Response.Redirect("~/Pages/DelUSer");
+        }
+    }
+
+}
+<div class="post-item">
+    <table class="user">
+        <tr>
+
+            @{var src = Convert.ToBase64String(TempViewUser.Avatar);}
+            <td style="background:white;" rowspan="4"><img style="width:150px;height:150px;border-radius: 100px;" src="data:image/png;base64,@src" alt="image" /></td>
+            <td colspan="4"><h1>@TempViewUser.Nickname</h1></td>
+        </tr>
+        <tr>
+            <td colspan="4">@{var FIO = TempViewUser.Surname + " " + TempViewUser.Name; }<p>@FIO  @TempViewUser.Age</p></td>
+        </tr>
+        <tr>
+            <td colspan="4"><p>@TempViewUser.City</p></td>
+        </tr>
+        <tr>
+            <td><p>Количество подписчиков @UsersPL.GetCountSubscribeToUser(TempViewUser.Nickname)<p></td>
+            <td><p>На скольких подписан @UsersPL.GetCountUsersToSubscribe(TempViewUser.Nickname)</p></td>
+        </tr>
+        <tr>
+            <td>
+                <form action="" method="post">
+                    <input type="hidden" name="DelUser" id="DelUser" value="@TempViewUser.Nickname">
+                    <button>Удалить @TempViewUser.Nickname</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="post-item">
+    <table class="car">
+        <tr>
+            <td colspan="2"><h1>Мои машины</h1></td>
+        </tr>
+        @{
+            var CarsViewUser = CarsPL.GetUserCars(TempViewUser);
+            foreach (var item in CarsViewUser)
+            {
+                <tr>
+                    <td colspan="2">
+                        @{var src1 = Convert.ToBase64String(item.Image);}
+                        <img style="width:150px;height:150px" src="data:image/png;base64,@src1" alt="image" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><p>@item.Brand @item.Model</p></td>
+                </tr>
+                <tr>
+                    <td>
+                        <form action="" method="post">
+                            <input type="hidden" name="Car" id="Car" value="@item.ID.ToString()">
+                            <button>Перейти в БЖ</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="" method="post">
+                            <input type="hidden" name="DelCar" id="DelCar" value="@item.ID.ToString()">
+                            <button>Удалить машину</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+        <tr>
+            <td colspan="2">
+                <a href="~/Pages/CreateCar">Добавить машину</a>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="post-item">
+    <table class="blog">
+        <tr>
+            <td><h1>Мой блог</h1>
+            <td />
+        </tr>
+        @{
+            var BlogViewUser = BlogsPL.GetUserBlogs(TempViewUser);
+            foreach (var item in BlogViewUser)
+            {
+                <tr>
+                    <td>
+                        <p>@item.Title<p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <form action="" method="post">
+                            <input type="hidden" name="UserBlog" id="UserBlog" value="@item.ID">
+                            <button>Перейти в блог</button>
+                        </form>
+                    </td>
+                </tr>
+
+            }
+        }
+        <tr>
+            <td>
+                <a href="~/Pages/CreateBlogUser">Написать в блог</a>
+            </td>
+        </tr>
+    </table>
+</div>

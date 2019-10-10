@@ -1,0 +1,138 @@
+﻿@using Epam.MyDrive.WEB.Models;
+
+@{
+    Layout = "~/Pages/_MainLayout.cshtml";
+    if (IsPost)
+    {
+        if (Request["Text"] != null)
+        {
+            var Text = Request["Text"];
+            SearchPL.SearchUsers = UsersPL.SearchUsers(Text);
+            SearchPL.SearchBlogs = BlogsPL.SearchBlogs(Text);
+            Response.Redirect("~/Pages/Search");
+        }
+        if (Request["User"] != null)
+        {
+            UsersPL.ViewUser = Request["User"];
+            Response.Redirect("~/Pages/User");
+        }
+        if (Request["Message"] != null)
+        {
+            UsersPL.ViewUser = Request["Message"];
+            Response.Redirect("~/Pages/CreateMessage");
+        }
+        if (Request["DelUser"] != null)
+        {
+            UsersPL.ViewUser = Request["DelUser"];
+            Response.Redirect("~/Pages/DelUSer");
+        }
+        if (Request["DelUser"] != null)
+        {
+            UsersPL.ViewUser = Request["DelUser"];
+            Response.Redirect("~/Pages/DelUSer");
+        }
+        if (Request["Role"] != null)
+        {
+            UsersPL.ViewUser = Request["Name"];
+            var Role = Request["Role"];
+            UsersPL.EditRoleUser(UsersPL.ViewUser, MyRoleProvider.GetAnotherRole(UsersPL.ViewUser, Role));
+        }
+
+    }
+}
+
+<div class="post-item">
+    <table class="blog">
+        <tr>
+            <td>
+                <form action="" method="post">
+                    <label for="a">Я ищу</label>
+                    <input type="search" name="Text" id="Text">
+                    <button>Поиск</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="post-item">
+    <table class="user">
+        @{var SearchUsers = SearchPL.SearchUsers;}
+        @{ foreach (var item in SearchUsers)
+    {
+                <tr>
+                    @{var src = Convert.ToBase64String(item.Avatar);}
+                    <td style="background:white;" rowspan="4"><img style="width:150px;height:150px;border-radius: 100px;" src="data:image/png;base64,@src" alt="image" /></td>
+                    <td colspan="4"><h1>@item.Nickname</h1></td>
+                </tr>
+                <tr>
+                    <td colspan="4">@{var FIO = item.Surname + " " + item.Name; }<p>@FIO  @item.Age</p></td>
+                </tr>
+                <tr>
+                    <td colspan="4"><p>@item.City</p></td>
+                </tr>
+                <tr>
+                    <td><p>Количество подписчиков @UsersPL.GetCountSubscribeToUser(item.Nickname)<p></td>
+                    <td><p>На скольких подписан @UsersPL.GetCountUsersToSubscribe(item.Nickname)</p></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <form action="" method="post">
+                            <input type="hidden" name="User" id="User" value="@item.Nickname">
+                            <button>На страницу @item.Nickname</button>
+                        </form>
+                    </td>
+                    @if (User.IsInRole("User") || User.IsInRole("Admin"))
+{
+                        <td>
+                            <form action="" method="post">
+                                <input type="hidden" name="Message" id="Message" value="@item.Nickname">
+                                <button>Написать сообщение @item.Nickname</button>
+                            </form>
+                        </td>
+}
+                    @if (User.IsInRole("Admin"))
+{
+                        <td>
+                            <form action="" method="post">
+                                <input type="hidden" name="DelUser" id="DelUser" value="@item.Nickname">
+                                <button>Удалить @item.Nickname</button>
+                            </form>
+                        </td>
+                        <td>
+                            <p>@MyRoleProvider.RoleToString(UsersPL.GetUserRoleByNick(item.Nickname))</p>
+                            <form action="" method="post">
+                                <input type="hidden" name="Name" id="Name" value="@item.Nickname">
+                                <input type="hidden" name="Role" id="Role" value="@UsersPL.GetUserRoleByNick(item.Nickname)">
+                                <button>Изменить роль @item.Nickname</button>
+                            </form>
+                        </td>
+}
+                </tr>
+    }
+        }
+    </table>
+</div>
+<div class="post-item">
+    <table class="blog">
+
+        @{var SearchBlogs = SearchPL.SearchBlogs;}
+        @{ foreach (var item in SearchBlogs)
+    {
+                <tr>
+                    <td>
+                        <p>@item.Title<p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>@item.Text<p>
+                    </td>
+                </tr>
+    }
+        }
+    </table>
+</div>
+@{SearchPL.NewSearchUsers(); 
+  SearchPL.NewSearchBlogs();
+ }

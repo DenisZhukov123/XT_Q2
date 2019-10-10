@@ -1,0 +1,177 @@
+﻿* {
+    margin:0px;
+}
+
+.user {
+    width: 1000px; 
+    margin: auto; 
+    background-color:black;
+    border-radius: 10px;
+}
+
+.user h1{
+    color:white;
+}
+.user p {
+        color: #808080;
+    }
+
+.car {
+    width: 1000px;
+    margin:auto;
+    background-color: white;
+    border-radius: 10px;
+}
+
+    .car h1 {
+        color: black;
+    }
+
+    .car p {
+        color: #808080;
+    }
+
+.blog {
+    width: 1000px;
+    margin: auto; 
+    background-color: white;
+    border-radius: 10px;
+}
+
+    .blog h1 {
+        color: black;
+    }
+
+    .blog p {
+        color: #808080;
+    }
+
+
+td {
+    text-align: center;
+    font-size: 22px;
+}
+
+#block-body {
+    width: 100%;
+    margin: 5px auto;
+    height: auto;
+}
+
+.caption {
+    color: white;
+}
+
+.post-wrap {
+    width:100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.post-item {
+    width: 100%;
+    margin: 0 auto;
+    margin-top:20px;
+}
+
+
+.item-content-user {
+    background: black;
+    padding: 40px;
+    border-radius: 10px;
+    width:90%;
+}
+
+.item-content-car {
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    width: 90%;
+}
+
+
+.item-body-user {
+    font-size: 14px;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.item-body-car {
+    font-size: 14px;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+    .item-body-user h1 {
+        font-weight: 500;
+        margin-bottom: 15px;
+        color:white;
+    }
+
+.item-body-ca h1 {
+    font-weight: 500;
+    margin-bottom: 15px;
+    color: black;
+}
+
+    .item-body-user p {
+        transition-delay: .1s;
+        color: #b7a6a6;
+    }
+
+body {
+    background: #ddd2d2;
+}
+
+#navbar ul {
+    display: none;
+    background-color: #f90;
+    position: absolute;
+    top: 100%;
+}
+
+#navbar li:hover ul {
+    display: block;
+}
+
+#navbar, #navbar ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+#navbar {
+    height: 30px;
+    background-color: #666;
+    padding-left: 25px;
+    min-width: 470px;
+}
+
+    #navbar li {
+        float: left;
+        position: relative;
+        height: 100%;
+    }
+
+        #navbar li a {
+            display: block;
+            padding: 6px;
+            width: 120px;
+            color: #fff;
+            text-decoration: none;
+            text-align: center;
+        }
+
+    #navbar ul li {
+        float: none;
+    }
+
+    #navbar li:hover {
+        background-color: #f90;
+    }
+
+    #navbar ul li:hover {
+        background-color: #666;
+    }
