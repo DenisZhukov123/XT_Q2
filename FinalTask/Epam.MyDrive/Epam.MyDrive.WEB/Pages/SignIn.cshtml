@@ -1,0 +1,45 @@
+﻿@using Epam.MyDrive.WEB.Models;
+@{
+    string errorMessage = null;
+    if (IsPost)
+    {
+        var login = Request["login"];
+        var pass = Request["pass"];
+        if (Auth.CanLogin(login, pass))
+        {
+            FormsAuthentication.SetAuthCookie(login, true);
+            UsersPL.CurrentUser = login;
+            UsersPL.ViewUser = "";
+            Response.Redirect("/Pages/Index");
+            return;
+        }
+        else
+        {
+            errorMessage = "Логин или пароль неверны!";
+        }
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login page</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet">
+    <link href="~/SignInStyles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="login-page">
+        <div class="form">Введите логин и пароль или нажмите на вход чтобы войти как "Гость"
+            @if (errorMessage != null)
+            {
+                    <p>@errorMessage</p>
+            }
+            <form method="post" class="login-form">
+                <input type="text" name="login" placeholder="Логин" />
+                <input type="password" name="pass" placeholder="Пароль" />
+                <button>Войти</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

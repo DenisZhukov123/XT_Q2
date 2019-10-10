@@ -1,0 +1,45 @@
+﻿@using Epam.MyDrive.WEB.Models;
+@{
+    Layout = "~/Pages/_MainLayout.cshtml";
+    var TempCurrentCar = CarsPL.GetCarById(Guid.Parse(CarsPL.Temp));
+    var TempCurrentBlog = BlogsPL.GetCarBlogs(TempCurrentCar);
+
+    if (IsPost)
+    {
+        if(Request["DelCar"] != null)
+        {
+            CarsPL.DeleteCar(TempCurrentCar);
+            Response.Redirect("~/Pages/CurrentUser");
+        }
+        if(Request["Cancel"] != null)
+        {
+            Response.Redirect("~/Pages/CurrentUser");
+        }
+
+    }
+}
+
+
+    <div class="post-item">
+        <table class="car">
+            <tr>
+                <td><h1>Вы уверены, что хотите удалить машину?</h1>
+            </tr>
+            <tr>
+                <td>
+                    <form action="" method="post">
+                        <input type="hidden" name="DelCar" id="DelCar" value="@CarsPL.Temp">
+                        <button>Да</button>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <form action="" method="post">
+                        <input type="hidden" name="Cancel" id="Cancel" value="@CarsPL.Temp">
+                        <button>Нет</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>

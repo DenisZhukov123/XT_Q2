@@ -1,0 +1,57 @@
+﻿@using Epam.MyDrive.WEB.Models;
+
+@{
+    Layout = "~/Pages/_MainLayout.cshtml";
+    string errorMessage = null;
+    Validation.RequireField("Brand", "Требуется ввести Марку");
+    Validation.Add("Brand", Validator.StringLength(25, 1));
+    Validation.RequireField("Model", "Требуется ввести Модель");
+    Validation.Add("Model", Validator.StringLength(25, 1));
+    Validation.RequireField("Manuf", "Требуется ввести дату выпуска");
+    Validation.Add("Manuf", Validator.DateTime("Дата введена неверно"));
+    Validation.RequireField("Power", "Требуется ввести мощность");
+    Validation.Add("Power", Validator.Integer("Мощность должна быть целым числом"));
+    WebImage tempphoto = null;
+    if (IsPost && Validation.IsValid())
+    {
+        tempphoto = WebImage.GetImageFromRequest();
+        byte[] photo = null;
+        if (tempphoto != null)
+        {
+            photo = tempphoto.GetBytes();
+        }
+        var Brand = Request["Brand"];
+        var Model = Request["Model"];
+        var Manuf = Request["Manuf"];
+        var Power = Request["Power"];
+        var postedFile = Request.Files["Image"];
+        if (CarsPL.CreateCar(Brand, Model, Manuf, Power, photo, UsersPL.CurrentUser))
+        {
+            errorMessage = "Машина создана успешно!";
+        }
+        else
+        {
+            errorMessage = "Ошибка при создании машины!";
+        }
+    }
+}
+    <div class="login-page">
+        <div class="form">
+            @if (errorMessage != null)
+            {
+                @errorMessage
+            }
+            <form method="post" class="login-form" enctype="multipart/form-data">
+                @Html.ValidationMessage("Brand")
+                <input type="text" name="Brand" id="Brand" placeholder="Марка машины" value="@Request["Brand"]" @Validation.For("Brand") />
+                @Html.ValidationMessage("Model")
+                <input type="text" name="Model" id="Model" placeholder="Модель" value="@Request["Model"]" @Validation.For("Model") />
+                @Html.ValidationMessage("Manuf")
+                <input type="text" name="Manuf" id="Manuf" placeholder="Дата выпуска" value="@Request["Manuf"]" @Validation.For("Manuf") />
+                @Html.ValidationMessage("Power")
+                <input type="text" name="Power" id="Power" placeholder="Мощность" value="@Request["Power"]" @Validation.For("Power") />
+                <input type="file" name="Image" id="Image" placeholder="Изображение" />
+                <button>Добавить</button>
+            </form>
+        </div>
+    </div>

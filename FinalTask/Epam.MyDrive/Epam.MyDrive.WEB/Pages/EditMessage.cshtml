@@ -1,0 +1,28 @@
+﻿@using Epam.MyDrive.WEB.Models;
+@{
+    Layout = "~/Pages/_MainLayout.cshtml";
+    var TempCurrentMess = MessagePL.GetMessageById(Guid.Parse(MessagePL.Temp));
+    Validation.RequireField("Text", "Требуется ввести текст");
+    Validation.Add("Text", Validator.StringLength(1000,1));
+    if (IsPost && Validation.IsValid())
+    {
+        var Text = Request["Text"];
+        MessagePL.EditMessage(TempCurrentMess, Text);
+        Response.Redirect("~/Pages/EditMessage");
+    }
+
+}
+
+<div class="post-item">
+    <table class="blog">
+        <tr>
+            <td>
+                <form action="" method="post">
+                    <p>@Html.ValidationMessage("Text")</p>
+                    <p><textarea rows="10" cols="45" name="Text" value="@Request["Text"]" @Validation.For("Text")>@TempCurrentMess.Text</textarea></p>
+                    <button>Изменить</button>
+                </form>
+            <td />
+        </tr>
+    </table>
+</div>

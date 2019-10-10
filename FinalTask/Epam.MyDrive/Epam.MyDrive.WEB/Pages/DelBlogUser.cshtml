@@ -1,0 +1,43 @@
+﻿@using Epam.MyDrive.WEB.Models;
+@{
+    Layout = "~/Pages/_MainLayout.cshtml";
+    var TempCurrentBlog = BlogsPL.GetBlogsById(Guid.Parse(BlogsPL.Temp));
+    var TempCurrentUser = UsersPL.ViewUser;
+    if (IsPost)
+    {
+        if (Request["DelBlog"] != null)
+        {
+            BlogsPL.DeleteBlogUser(TempCurrentBlog, TempCurrentUser);
+            Response.Redirect("~/Pages/Index");
+        }
+        if (Request["Cancel"] != null)
+        {
+            Response.Redirect("~/Pages/UserBlog");
+        }
+
+    }
+}
+
+<div class="post-item">
+    <table class="car">
+        <tr>
+            <td><h1>Вы уверены, что хотите удалить запись?</h1>
+        </tr>
+        <tr>
+            <td>
+                <form action="" method="post">
+                    <input type="hidden" name="DelBlog" id="DelBlog" value="@TempCurrentBlog.ID.ToString()">
+                    <button>Да</button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <form action="" method="post">
+                    <input type="hidden" name="Cancel" id="Cancel" value="@TempCurrentBlog.ID.ToString()">
+                    <button>Нет</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>

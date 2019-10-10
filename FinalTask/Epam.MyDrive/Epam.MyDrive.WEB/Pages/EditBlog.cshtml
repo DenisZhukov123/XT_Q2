@@ -1,0 +1,34 @@
+﻿@using Epam.MyDrive.WEB.Models;
+@{
+    Layout = "~/Pages/_MainLayout.cshtml";
+    Validation.RequireField("Title", "Требуется ввести заголовок");
+    Validation.Add("Title", Validator.StringLength(50,1));
+    Validation.RequireField("Text", "Требуется ввести текст");
+    Validation.Add("Text", Validator.StringLength(1000,1));
+    var TempCurrentBlog = BlogsPL.GetBlogsById(Guid.Parse(BlogsPL.Temp));
+    var Comments = CommentsPL.GetAllComments(TempCurrentBlog);
+    if (IsPost && Validation.IsValid())
+    {
+        var Blog = Request["Blog"];
+        var Title = Request["Title"];
+        var Text = Request["Text"];
+        BlogsPL.EditBlog(TempCurrentBlog, Title, Text);
+        Response.Redirect("~/Pages/EditBlog");
+    }
+}
+
+<div class="post-item">
+    <table class="blog">
+        <tr>
+            <td>
+                <form action="" method="post">
+                    <p>@Html.ValidationMessage("Title")</p>
+                    <input type="text" name="Title" id="Title" value="@TempCurrentBlog.Title" @Validation.For("Title")>
+                    <p>@Html.ValidationMessage("Text")</p>
+                    <p><textarea rows="10" cols="45" name="Text" @Validation.For("Text")>@TempCurrentBlog.Text</textarea></p>
+                    <button>Изменить</button>
+                </form>
+            <td />
+        </tr>
+    </table>
+</div>

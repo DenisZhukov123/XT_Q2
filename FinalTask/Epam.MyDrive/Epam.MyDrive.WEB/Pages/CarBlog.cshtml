@@ -1,0 +1,102 @@
+﻿@using Epam.MyDrive.WEB.Models;
+@{
+    Layout = "~/Pages/_MainLayout.cshtml";
+    var TempCurrentBlog = BlogsPL.GetBlogsById(Guid.Parse(BlogsPL.Temp));
+    var Comments = CommentsPL.GetAllComments(TempCurrentBlog);
+
+    if (IsPost)
+    {
+        if (Request["Comment"] != null)
+        {
+            var Comment = Request["Comment"];
+            CommentsPL.CreateComment(Comment, TempCurrentBlog, UsersPL.GetUserByNick(UsersPL.CurrentUser));
+        }
+        if (Request["BlogEdit"] != null)
+        {
+            Response.Redirect("~/Pages/EditBlog");
+        }
+        if (Request["BlogRemove"] != null)
+        {
+            Response.Redirect("~/Pages/DelBlogCar");
+        }
+
+    }
+
+}
+
+<div class="post-item">
+    <table class="blog">
+        <tr>
+            <td>
+                <h1> @TempCurrentBlog.Title</h1>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @TempCurrentBlog.Text
+            </td>
+        </tr>
+        @if (User.IsInRole("User") && UsersPL.CurrentUser == UsersPL.ViewUser || User.IsInRole("Admin"))
+        {
+            <tr>
+                <td>
+                    <form action="" method="post">
+                        <input type="hidden" name="BlogEdit" id="BlogEdit" value="@TempCurrentBlog.ID.ToString()">
+                        <button>Изменить</button>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <form action="" method="post">
+                        <input type="hidden" name="BlogRemove" id="BlogRemove" value="@TempCurrentBlog.ID.ToString()">
+                        <button>Удалить</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<div class="post-item">
+    <table class="blog">
+        <tr>
+            <td>
+                Комментарии
+            </td>
+        </tr>
+        @foreach (var item in Comments)
+        {
+            <tr>
+                <td>
+                    @item.Nickname
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @item.Text
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+@if (User.IsInRole("User") || User.IsInRole("Admin"))
+{
+    <div class="post-item">
+        <table class="blog">
+            <tr>
+                <td>
+                    <form action="" method="post">
+                        <div>
+                            <label for="a">Написать комментарий</label>
+                            <p><textarea rows="10" cols="45" name="Comment"></textarea></p>
+                        </div>
+                        <button>Отправить</button>
+                    </form>
+                <td />
+            </tr>
+        </table>
+    </div>
+
+}
+

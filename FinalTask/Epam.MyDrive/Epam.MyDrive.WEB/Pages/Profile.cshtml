@@ -1,0 +1,83 @@
+﻿@using Epam.MyDrive.WEB.Models;
+
+@{
+    Layout = "~/Pages/_MainLayout.cshtml";
+    string errorMessage = null;
+    WebImage tempphoto = null;
+
+    Validation.Add("Nick", Validator.StringLength(25,0));
+    Validation.Add("Name", Validator.StringLength(25,0));
+    Validation.Add("Surname", Validator.StringLength(25,0));
+    Validation.Add("Birth", Validator.DateTime("Дата введена неверно"));
+    Validation.Add("City", Validator.StringLength(25,0));
+
+    if (IsPost && Validation.IsValid())
+    {
+        tempphoto = WebImage.GetImageFromRequest();
+        byte[] photo = null;
+        if (tempphoto != null)
+        {
+            photo = tempphoto.GetBytes();
+        }
+        var Nick = Request["Nick"];
+        var Surname = Request["Surname"];
+        var Name = Request["Name"];
+        var Birth = Request["Birth"];
+        var City = Request["City"];
+        var postedFile = Request.Files["Image"];
+        
+        if (UsersPL.EditUser(Nick, photo, Surname, Name, Birth, City))
+        {
+            errorMessage = "Данные пользователя успешно изменены!";
+            Response.Redirect("~/Pages/SignIn");
+        }
+        else
+        {
+            errorMessage = "Ошибка при изменении данных пользователя!";
+        }
+    }
+}
+
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Registration</title>
+        <link href="~/Content/bootstrap.css" rel="stylesheet">
+        <link href="~/SignInStyles.css" rel="stylesheet">
+        <style>
+            .field-validation-error {
+                color: red;
+                font-weight: bold;
+            }
+
+            .input-validation-error {
+                color: red;
+                font-weight: bold;
+            }
+        </style>
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.js"></script>
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.8.1/jquery.validate.js">
+        </script>
+        <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    </head>
+<div class="login-page">
+    <div class="form">
+        @if (errorMessage != null)
+        {
+            <div>@errorMessage</div>
+        }
+    <form method="post" class="login-form" enctype="multipart/form-data">
+        @Html.ValidationMessage("Nick")
+        <input type="text" name="Nick" id="Nick" placeholder="Никнейм" value="@Request["Nick"]" @Validation.For("Nick") />
+        @Html.ValidationMessage("Name")
+        <input type="text" name="Name" id="Name" placeholder="Имя" value="@Request["Name"]" @Validation.For("Name") />
+        @Html.ValidationMessage("Surname")
+        <input type="text" name="Surname" id="surname" placeholder="Фамилия" value="@Request["Surname"]" @Validation.For("Surname") />
+        @Html.ValidationMessage("Birth")
+        <input type="text" name="Birth" id="Birth" placeholder="Дата рождения" value="@Request["Birth"]" @Validation.For("Birth") />
+        @Html.ValidationMessage("City")
+        <input type="text" name="City" id="City" placeholder="Город" equest["Birth"]" @Validation.For("City")/>
+        <input type="file" accept="image/*" name="Image" id="Image" placeholder="Аватар" />
+        <input type="submit" value="Изменить" />
+    </form>
+    </div>
+</div>

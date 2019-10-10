@@ -1,0 +1,42 @@
+﻿@using Epam.MyDrive.WEB.Models;
+@{
+    Layout = "~/Pages/_MainLayout.cshtml";
+    var User = UsersPL.GetUserByNick(UsersPL.ViewUser);
+    if (IsPost)
+    {
+        if (Request["DelUser"] != null)
+        {
+            UsersPL.DeleteUser(User);
+            Response.Redirect("~/Pages/Index");
+        }
+        if (Request["Cancel"] != null)
+        {
+            Response.Redirect("~/Pages/AllUsers");
+        }
+
+    }
+}
+
+<div class="post-item">
+    <table class="car">
+        <tr>
+            <td><h1>Вы уверены, что хотите удалить пользователя?</h1>
+        </tr>
+        <tr>
+            <td>
+                <form action="" method="post">
+                    <input type="hidden" name="DelUser" id="DelUser"  size="1" value="@UsersPL.ViewUser">
+                    <button>Да</button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <form action="" method="post">
+                    <input type="hidden" name="Cancel" id="Cancel" size="1" value="@UsersPL.ViewUser">
+                    <button>Нет</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
